@@ -23,6 +23,7 @@ function restartgame() {
 }
 
 function init() {
+    $("#gameover").remove();
     for (var i = 0; i < 4; i++) {
         for (var j = 0; j < 4; j++) {
             $("#grid-container").append("<div class='grid-cell' id='grid-cell-" + i + "-" + j + "'></div>");
@@ -78,16 +79,31 @@ function generateOneNumber() {
     if (nospace(board)) {
         return false;
     }
-    //随机一个位置
-    var randx = parseInt(Math.floor(Math.random() * 4));
-    var randy = parseInt(Math.floor(Math.random() * 4));
-    while (true) {
-        if (board[randx][randy] == 0) {
-            break;
+
+    var space_list = new Array();
+
+    for(var i=0; i<4; i++){
+        for(var j=0; j<4; j++){
+           if(board[i][j] == 0){
+               space_list.push({'row':i,'col':j});
+           }
         }
-        randx = parseInt(Math.floor(Math.random() * 4));
-        randy = parseInt(Math.floor(Math.random() * 4));
     }
+
+    var randxy = space_list[parseInt(Math.floor(Math.random() * space_list.length))]
+    var randx = randxy['row']
+    var randy = randxy['col']
+
+    // //随机一个位置
+    // var randx = parseInt(Math.floor(Math.random() * 4));
+    // var randy = parseInt(Math.floor(Math.random() * 4));
+    // while (true) {
+    //     if (board[randx][randy] == 0) {
+    //         break;
+    //     }
+    //     randx = parseInt(Math.floor(Math.random() * 4));
+    //     randy = parseInt(Math.floor(Math.random() * 4));
+    // }
 
     //随机一个数字
     var randNumber = Math.random() < 0.5 ? 2 : 4;
